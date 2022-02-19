@@ -1,0 +1,22 @@
+.Lineup {
+    width: 100%;
+}
+
+.Field {
+    background: url(https://fantasy.premierleague.com/static/media/pitch-default.49da4402.svg) center center / 100% 156% no-repeat;
+}
+
+.StartingPlayersWrapper {
+    width: 64%;
+    margin: auto;
+}
+
+.Bench {
+    
+    margin: auto;
+    background-color: moccasin;
+}
+
+.FieldBackground {
+    background-color: #37003c;
+}
