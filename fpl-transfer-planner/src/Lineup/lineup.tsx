@@ -19,9 +19,9 @@ function renderRow(poisitionPlayers: Player[]) {
     if (poisitionPlayers.length === 0) return;
 
     return (
-        <Row key={poisitionPlayers[0].position} className="justify-content-center">
+        <Row key={poisitionPlayers[0].position}>
             {poisitionPlayers.map(player => (
-                <Col className="d-flex justify-content-md-center" key={player.name}>
+                <Col className="" key={player.name}>
                     <SelectedPlayer player={player} opponents={fixtures.get(player.team)!} />
                 </Col>
             ))}

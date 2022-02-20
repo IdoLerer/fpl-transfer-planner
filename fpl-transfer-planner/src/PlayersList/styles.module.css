@@ -1,22 +1,19 @@
-.Lineup {
-    width: 100%;
+.PlayersList{
+    overflow-y: scroll;
+    height: 100vh;
+    max-height: 850px;
 }
 
-.Field {
-    background: url(https://fantasy.premierleague.com/static/media/pitch-default.49da4402.svg) center center / 100% 156% no-repeat;
+.PlayerDetails {
+    display: inline-block;
+    margin-left: 1rem;
 }
 
-.StartingPlayersWrapper {
-    width: 64%;
-    margin: auto;
+.PlayerName {
+    font-weight: 500;
 }
 
-.Bench {
-    
-    margin: auto;
-    background-color: moccasin;
-}
-
-.FieldBackground {
-    background-color: #37003c;
+.ShirtWrapper {
+    display: inline-block;
+    vertical-align:middle;
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './styles.module.css';
 import Player from '../Player';
+import Shirt from '../Shirt/shirt';
 
 type SelectedPlayerProps = {
     player: Player
@@ -10,10 +11,10 @@ type SelectedPlayerProps = {
 function SelectedPlayer({player, opponents}:SelectedPlayerProps) {
     const opponentsString = opponents.join(', ')
     return (
-        <div className={`p-3 d-flex align-items-center flex-column ${styles.Player}`}>
-            <img className={styles.ShirtImage} src="https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_43-66.webp" />
+        <div className={`d-flex align-items-center flex-column ${styles.Player}`}>
+            <Shirt team={player.team} position={player.position} width={'70'} />
             <div className={`${styles.PlayerName}`} >{player.name}</div>
-            <div className={`${styles.PlayerName}`} >{opponentsString}</div>
+            <div className={`${styles.Opponents}`} >{opponentsString}</div>
         </div>
     )
 

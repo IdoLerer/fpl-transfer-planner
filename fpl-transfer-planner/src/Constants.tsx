@@ -11,7 +11,7 @@ export enum Position {
     ARS,
     AVL,
     BRE,
-    BRI,
+    BHA,
     BUR,
     CHE,
     CRY,

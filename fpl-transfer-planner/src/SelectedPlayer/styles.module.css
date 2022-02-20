@@ -1,16 +1,26 @@
 .Player {
     margin: auto;
+    padding: 10px 0;
     max-width: 200px;
 }
 
-.PlayerName, .ShirtImage {
-    max-width: 100%;
+.PlayerName, .Opponents {
+    width: 100%;
+    max-width: 145px;
 }
 
 .PlayerName {
     width: 100%;
     text-align: center;
+    background-color: rgb(255, 255, 255);
+    padding: 2px;
+    margin-top: 10px;
+}
+
+.Opponents {
+    width: 100%;
+    text-align: center;
     background-color: rgb(243, 243, 243);
     padding: 2px;
-    margin-top: 2px;
+    margin-top: 1px;
 }

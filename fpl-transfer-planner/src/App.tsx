@@ -65,13 +65,13 @@ function App() {
     return <div>Loading...</div>;
   } else {
     return (
-      <div className="App m-5">
+      <div className="App mt-3">
         <Container>
           <Row>
             <Col lg={8} md={12}>
               <Lineup startingPlayers={startingPlayers} benchedPlayers={benchedPlayers} gameweekFixtures={gameweekFixtures} />
             </Col>
-            <Col xs={4}>
+            <Col lg={4}>
               <PlayersList availablePlayers={availablePlayers} />
             </Col>
           </Row>
