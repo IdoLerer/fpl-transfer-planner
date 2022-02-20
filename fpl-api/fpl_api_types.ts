@@ -25,6 +25,12 @@ export type ManagerGameweekData = {
     picks: PickData[];
 }
 
+export type FixtureData = {
+    event: number;
+    team_h: number;
+    team_a: number;
+}
+
 export type Player = {
     id: number;
     name: string;

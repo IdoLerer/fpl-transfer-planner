@@ -1,4 +1,4 @@
-import { BootstrapData, ManagerGameweekData, PickData } from './fpl_api_types';
+import { BootstrapData, FixtureData, ManagerGameweekData, PickData } from './fpl_api_types';
 import { Player } from './fpl_api_types';
 import fetch from 'node-fetch';
 
@@ -6,6 +6,7 @@ import fetch from 'node-fetch';
 let bootstrapData: BootstrapData | null = null;
 let allPlayers: null | Player[] = null;
 let managerGameweek: null | ManagerGameweekData = null;
+let gmeweekFixturesData: null | FixtureData[] = null;
 
 const fetchBootstrapData = async (): Promise<BootstrapData> => {
     if (!bootstrapData) {
@@ -36,10 +37,22 @@ export const fetchManagerGameweek = async (managerId: string, gameweek: string) 
     const benchPlayersIds = [];
     for (const pick of picks) {
         if (pick.multiplier === 0) {
-            benchPlayersIds.push(pick.element)
+            benchPlayersIds.push(pick.element);
         } else {
             startingPlayersIds.push(pick.element);
         }
     }
     return {startingPlayersIds, benchPlayersIds};
+}
+
+export const fetchGameweekFixtures = async (gameweek: string) => {
+    if (!gmeweekFixturesData) {
+        gmeweekFixturesData = await fetch(`https://fantasy.premierleague.com/api/fixtures/?event=${gameweek}`)
+            .then(res => res.json()) as FixtureData[];
+    }
+    const gameWeekFixtures = [];
+    for (const fixtureData of gmeweekFixturesData) {
+        gameWeekFixtures.push([fixtureData.team_h, fixtureData.team_a]);
+    }
+    return gameWeekFixtures;
 }

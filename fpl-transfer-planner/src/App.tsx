@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { initializeApp } from 'firebase/app'
 import { Position, Team } from './Constants';
-import { loadAllPlayers, loadManagerGameweek } from './data_loader';
+import { loadAllPlayers, loadGameweekFixtures, loadManagerGameweek } from './data_loader';
 
 initializeApp({
   apiKey: "AIzaSyA9JHTFYdbwL1N6d-lMD2l1U4cC4WCltv0",
@@ -28,6 +28,7 @@ function App() {
   const [availablePlayers, setAvailablePlayers] = useState<Player[]>([]);
   const [startingPlayers, setStartingPlayers] = useState<Player[]>([]);
   const [benchedPlayers, setBenchedPlayers] = useState<Player[]>([]);
+  const [gameweekFixtures, setGameweekFixtures] = useState<Map<Team, string[]>>(new Map());
 
   useEffect(() => {
     loadAllPlayers()
@@ -37,14 +38,16 @@ function App() {
             allPlayers.set(player.id, player);
           }
           setAvailablePlayers(players);
-          setIsLoaded(true);
-
         })
       .then(loadManagerGameweek).then((picks) => {
         const startingPlayersData = picks.startingPlayersIds.map((playerId: string) => allPlayers.get(playerId)!);
         setStartingPlayers(startingPlayersData);
         const benchPlayersData = picks.benchPlayersIds.map((playerId: string) => allPlayers.get(playerId)!);
         setBenchedPlayers(benchPlayersData);
+      })
+      .then(loadGameweekFixtures).then((gameweekFixtures) => {
+        setGameweekFixtures(gameweekFixtures);
+        setIsLoaded(true);
       })
       .catch(
         // Note: it's important to handle errors here
@@ -66,7 +69,7 @@ function App() {
         <Container>
           <Row>
             <Col lg={8} md={12}>
-              <Lineup startingPlayers={startingPlayers} benchedPlayers={benchedPlayers} />
+              <Lineup startingPlayers={startingPlayers} benchedPlayers={benchedPlayers} gameweekFixtures={gameweekFixtures} />
             </Col>
             <Col xs={4}>
               <PlayersList availablePlayers={availablePlayers} />
