@@ -5,19 +5,8 @@ import PlayersList from './PlayersList/players_list'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { initializeApp } from 'firebase/app'
 import { Position, Team } from './Constants';
 import { loadAllPlayers, loadGameweekFixtures, loadManagerGameweek } from './data_loader';
-
-initializeApp({
-  apiKey: "AIzaSyA9JHTFYdbwL1N6d-lMD2l1U4cC4WCltv0",
-  authDomain: "fpl-transfer-planner.firebaseapp.com",
-  projectId: "fpl-transfer-planner",
-  storageBucket: "fpl-transfer-planner.appspot.com",
-  messagingSenderId: "1089247855703",
-  appId: "1:1089247855703:web:a6ae6ff4ccc5c9eebc4f12",
-  measurementId: "G-F48E6VR3QZ"
-})
 
 const allPlayers: Map<string, Player> = new Map();
 
