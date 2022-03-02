@@ -22,7 +22,7 @@ export const fetchAllPlayers = async () => {
     allPlayers = [];
     const playerData = bootstrapData.elements[0];
     for (const playerData of bootstrapData.elements) {
-        allPlayers.push({ id: playerData.id, name: playerData.web_name, cost: playerData.now_cost, position: playerData.element_type, team: playerData.team })
+        allPlayers.push({ id: playerData.id, name: playerData.web_name, cost: playerData.now_cost, position: playerData.element_type, team: playerData.team, totalPoints: playerData.total_points })
     }
     return allPlayers;
 }

@@ -10,6 +10,7 @@ export type PlayerData = {
     now_cost: number;
     team: number;
     element_type: number;
+    total_points: number;
 }
 
 export type PickData = {
@@ -37,4 +38,5 @@ export type Player = {
     cost: number;
     position: number;
     team: number;
+    totalPoints: number;
 }
