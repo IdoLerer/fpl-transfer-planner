@@ -6,7 +6,7 @@ export const loadAllPlayers = async () => {
         .then(res => res.json());
     const players = [];
     for (const playerData of response.players) {
-        players.push(new Player(playerData.id, playerData.name, playerData.cost, playerData.position, playerData.team))
+        players.push(new Player(playerData.id, playerData.name, playerData.cost, playerData.position, playerData.team, playerData.totalPoints))
     }
     return players;
 }

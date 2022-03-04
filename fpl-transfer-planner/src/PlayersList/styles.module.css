@@ -21,3 +21,20 @@ th {
 .ShirtWrapper {
     display: inline-block;
 }
+
+.PropertyButton {
+    width: 80px;
+    background-color: transparent;
+    border: none;
+    font: inherit;
+    font-weight: 500;
+    text-align: inherit;
+}
+
+.Ascending>button::after {
+    content: '  ▲';
+}
+
+.Descending>button::after {
+    content: '  ▼';
+}
