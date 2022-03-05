@@ -1,12 +1,16 @@
-.Player {
+.PlayerWrapper {
     margin: auto;
     padding: 10px 0;
     max-width: 200px;
 }
 
+.Player {
+    cursor: pointer;
+    max-width: 145px;
+}
+
 .PlayerName, .Opponents {
     width: 100%;
-    max-width: 145px;
 }
 
 .PlayerName {

@@ -22,9 +22,9 @@ function SelectedPlayer({ player, opponents, isStarting }: SelectedPlayerProps) 
     const { state, dispatch } = useContext(SelectionContext);
     let substitionClass = '';
     if (state.selectoionSate.substitutedPlayer === player) {
-        substitionClass = 'bg-success';
+        substitionClass = 'bg-primary';
     } else if (isAvailableForSubstitution(state.selectoionSate, player, isStarting)) {
-        substitionClass = 'bg-secondary';
+        substitionClass = 'bg-warning';
     }
     let userAction = UserAction.DEFAULT;
     if (state.selectoionSate.userAction === UserAction.DEFAULT) {
@@ -33,15 +33,14 @@ function SelectedPlayer({ player, opponents, isStarting }: SelectedPlayerProps) 
 
     return (
 
-        <div className={`d-flex align-items-center flex-column ${styles.Player} ${substitionClass}`}>
-            <Shirt team={player.team} position={player.position} width={'70'} />
-            <div className={`${styles.PlayerName}`} >{player.name}</div>
-            <div className={`${styles.Opponents}`} >{opponentsString}</div>
-            <button onClick={() => {
-                 dispatch!({ type: userAction, payload: player });
-                 }}>
-                Sub
-            </button>
+        <div className={styles.PlayerWrapper}>
+            <div className={`d-flex align-items-center flex-column ${styles.Player} ${substitionClass}`} onClick={() => {
+                dispatch!({ type: userAction, payload: player });
+            }}>
+                <Shirt team={player.team} position={player.position} width={'70'} />
+                <div className={`${styles.PlayerName}`} >{player.name}</div>
+                <div className={`${styles.Opponents}`} >{opponentsString}</div>
+            </div>
         </div>
     )
 
