@@ -10,7 +10,7 @@ export type SelectionContextState = {
 
 export type SelectionContextAction = {
     type: UserAction,
-    payload: Position
+    payload: Player
 }
 
 export type SelectionContextType = {
@@ -19,11 +19,22 @@ export type SelectionContextType = {
 }
 
 export const selectionContextReducer = (state: SelectionContextState, action: SelectionContextAction) => {
-    const { type, payload } = action; 
-    const userAction = type;
-    const legalSubPositions = state.lineup.getLegalPositionsForSwitch(payload, type);
-    const newSelectionState: SelectionState = {userAction, legalSubPositions};
-    const newState: SelectionContextState = {...state, selectoionSate: newSelectionState}
+    const player = action.payload;
+    const userAction = action.type;
+    let legalSubPositions;
+    switch (userAction) {
+        case UserAction.SUBSTITUTING_STARTING_PLAYER:
+            legalSubPositions = state.lineup.getLegalPositionsForSwitch(player.position, true);
+            break;
+        case UserAction.SUBSTITUTING_BENCHED_PLAYER:
+            legalSubPositions = state.lineup.getLegalPositionsForSwitch(player.position, false);
+            break;
+        case UserAction.DEFAULT:
+        default:
+            return { ...state, selectoionSate: initialSelectionState };
+    }
+    const newSelectionState: SelectionState = { userAction, legalSubPositions, substitutedPlayer: player };
+    const newState: SelectionContextState = { ...state, selectoionSate: newSelectionState }
     return newState;
 }
 

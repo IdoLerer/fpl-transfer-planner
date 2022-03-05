@@ -20,8 +20,16 @@ function isAvailableForSubstitution(selectionState: SelectionState, player: Play
 function SelectedPlayer({ player, opponents, isStarting }: SelectedPlayerProps) {
     const opponentsString = opponents.join(', ');
     const { state, dispatch } = useContext(SelectionContext);
-    const substitionClass = isAvailableForSubstitution(state.selectoionSate, player, isStarting) ? 'border border-primary' : '';
-    const userAction = isStarting ? UserAction.SUBSTITUTING_STARTING_PLAYER : UserAction.SUBSTITUTING_BENCHED_PLAYER;
+    let substitionClass = '';
+    if (state.selectoionSate.substitutedPlayer === player) {
+        substitionClass = 'bg-success';
+    } else if (isAvailableForSubstitution(state.selectoionSate, player, isStarting)) {
+        substitionClass = 'bg-secondary';
+    }
+    let userAction = UserAction.DEFAULT;
+    if (state.selectoionSate.userAction === UserAction.DEFAULT) {
+        userAction = isStarting ? UserAction.SUBSTITUTING_STARTING_PLAYER : UserAction.SUBSTITUTING_BENCHED_PLAYER;
+    }
 
     return (
 
@@ -29,8 +37,9 @@ function SelectedPlayer({ player, opponents, isStarting }: SelectedPlayerProps) 
             <Shirt team={player.team} position={player.position} width={'70'} />
             <div className={`${styles.PlayerName}`} >{player.name}</div>
             <div className={`${styles.Opponents}`} >{opponentsString}</div>
-            <button onClick={() => {console.log({type: userAction, payload: player.position});
-                 dispatch!({ type: userAction, payload: player.position })}}>
+            <button onClick={() => {
+                 dispatch!({ type: userAction, payload: player });
+                 }}>
                 Sub
             </button>
         </div>

@@ -1,4 +1,5 @@
 import { Position } from "../../Constants";
+import Player from "../../Player";
 
 export enum UserAction {
     DEFAULT = 'DEFAULT',
@@ -9,6 +10,7 @@ export enum UserAction {
 export interface SelectionState {
     userAction: UserAction;
     legalSubPositions: Position[];
+    substitutedPlayer?: Player;
 }
 
 export const initialSelectionState = {

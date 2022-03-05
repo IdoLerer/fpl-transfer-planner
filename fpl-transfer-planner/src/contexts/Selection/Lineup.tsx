@@ -38,10 +38,10 @@ export class Lineup {
         return [this.goalkeepers, this.defenders, this.midfielders, this.forwards];
     }
 
-    getLegalPositionsForSwitch(positionSwitched: Position, userAction: UserAction) {
+    getLegalPositionsForSwitch(positionSwitched: Position, isStarting: boolean) {
         if (positionSwitched === Position.GK) return [Position.GK];
         const outfieldPositions = [Position.DEF, Position.MID, Position.FWD];
-        if (userAction === UserAction.SUBSTITUTING_STARTING_PLAYER) {
+        if (isStarting) {
             switch (positionSwitched) {
                 case Position.DEF:
                     return this.defenders.length > 3 ? outfieldPositions : [Position.DEF];
@@ -55,8 +55,7 @@ export class Lineup {
                 default:
                     throw new Error("Impossible position");
             }
-        }
-        if (userAction === UserAction.SUBSTITUTING_BENCHED_PLAYER) {
+        } else {
             const possiblePositionsToRemove = new Set<Position>();
             if (this.defenders.length > 3) possiblePositionsToRemove.add(Position.DEF);
             if (this.midfielders.length > 3) possiblePositionsToRemove.add(Position.MID);
@@ -64,6 +63,5 @@ export class Lineup {
             possiblePositionsToRemove.add(positionSwitched);
             return Array.from(possiblePositionsToRemove);
         }
-        return [];
     }
 }
