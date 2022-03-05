@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { SelectionProvider } from './contexts/Selection';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <SelectionProvider>
+      <App />
+    </SelectionProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

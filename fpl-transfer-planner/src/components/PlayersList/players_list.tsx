@@ -2,8 +2,8 @@ import React, { useState, useMemo } from 'react';
 import styles from './styles.module.css';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Table from 'react-bootstrap/Table'
-import { Position, Team } from '../Constants'
-import Player from '../Player';
+import { Position, Team } from '../../Constants'
+import Player from '../../Player';
 import Shirt from '../Shirt/shirt';
 
 type PlayersListProps = {

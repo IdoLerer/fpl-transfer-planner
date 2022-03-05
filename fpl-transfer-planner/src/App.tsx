@@ -1,19 +1,15 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 import Player from './Player';
-import LineupBoard from './LineupBoard/lineup_board';
-import PlayersList from './PlayersList/players_list'
+import LineupBoard from './components/LineupBoard/lineup_board';
+import PlayersList from './components/PlayersList/players_list'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Position, Team } from './Constants';
 import { loadAllPlayers, loadGameweekFixtures, loadManagerGameweek } from './data_loader';
-import { Lineup } from './Lineup';
-import { defaultSelectionContext } from './SelectionContext';
+import { SelectionContext } from './contexts/Selection';
 
 const allPlayers: Map<string, Player> = new Map();
-const lineup = new Lineup();
-export const LineupContext = createContext(lineup);
-export const SelectionContext = createContext(defaultSelectionContext);
 
 function App() {
   const [error, setError] = useState<Error | null>(null);
@@ -21,6 +17,7 @@ function App() {
   const [currentGameweek, setCurrentGameweek] = useState(0);
   const [availablePlayers, setAvailablePlayers] = useState<Player[]>([]);
   const [gameweekFixtures, setGameweekFixtures] = useState<Map<Team, string[]>>(new Map());
+  const { state, dispatch } = useContext(SelectionContext);
 
   useEffect(() => {
     loadAllPlayers()
@@ -33,9 +30,9 @@ function App() {
         })
       .then(loadManagerGameweek).then((picks) => {
         const startingPlayers = picks.startingPlayersIds.map((playerId: string) => allPlayers.get(playerId)!);
-        lineup.fillPlayerPositions(startingPlayers);
+        state.lineup.fillPlayerPositions(startingPlayers);
         const benchPlayers = picks.benchPlayersIds.map((playerId: string) => allPlayers.get(playerId)!);
-        lineup.setBench(benchPlayers);
+        state.lineup.setBench(benchPlayers);
       })
       .then(loadGameweekFixtures).then((gameweekFixtures) => {
         setGameweekFixtures(gameweekFixtures);
@@ -59,18 +56,14 @@ function App() {
     return (
       <div className="App mt-3">
         <Container>
-          <LineupContext.Provider value={lineup}>
-            <SelectionContext.Provider value={defaultSelectionContext}>
-              <Row>
-                <Col lg={8} md={12}>
-                  <LineupBoard gameweekFixtures={gameweekFixtures} />
-                </Col>
-                <Col lg={4}>
-                  <PlayersList availablePlayers={availablePlayers} />
-                </Col>
-              </Row>
-            </SelectionContext.Provider>
-          </LineupContext.Provider>
+          <Row>
+            <Col lg={8} md={12}>
+              <LineupBoard gameweekFixtures={gameweekFixtures} />
+            </Col>
+            <Col lg={4}>
+              <PlayersList availablePlayers={availablePlayers} />
+            </Col>
+          </Row>
         </Container>
       </div>
     );
