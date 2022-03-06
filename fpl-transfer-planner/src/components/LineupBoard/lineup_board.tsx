@@ -41,12 +41,12 @@ function LineupBoard({ gameweekFixtures }: LineupProps) {
                 <div className={styles.Field}>
                     <div className={styles.StartingPlayersWrapper}>
                         {lineup.getOutfieldPlayersByPosition().map(position => (
-                            renderRow(position, true)
+                            renderRow(Array.from(position), true)
                         ))}
                     </div>
                 </div>
                 <div className={styles.Bench}>
-                    {renderRow(lineup.bench, false)}
+                    {renderRow(Array.from(lineup.bench), false)}
                 </div>
             </div>
         </div>

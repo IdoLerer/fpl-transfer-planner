@@ -2,9 +2,9 @@ import { Position } from "../../Constants";
 import Player from "../../Player";
 
 export enum UserAction {
-    DEFAULT = 'DEFAULT',
-    SUBSTITUTING_STARTING_PLAYER = 'SUBSTITUTING_STARTING_PLAYER',
-    SUBSTITUTING_BENCHED_PLAYER = 'SUBSTITUTING_BENCHED_PLAYER',
+    DEFAULT,
+    SUBSTITUTING_STARTING_PLAYER,
+    SUBSTITUTING_BENCHED_PLAYER ,
 }
 
 export interface SelectionState {

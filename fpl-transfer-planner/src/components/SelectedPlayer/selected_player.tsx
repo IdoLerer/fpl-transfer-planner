@@ -4,6 +4,7 @@ import Player from '../../Player';
 import Shirt from '../Shirt/shirt';
 import { SelectionState, UserAction } from '../../contexts/Selection/SelectionState';
 import { SelectionContext } from '../../contexts/Selection';
+import { SelectionActionType } from '../../contexts/Selection/reducer';
 
 type SelectedPlayerProps = {
     player: Player,
@@ -20,14 +21,17 @@ function isAvailableForSubstitution(selectionState: SelectionState, player: Play
 function SelectedPlayer({ player, opponents, isStarting }: SelectedPlayerProps) {
     const opponentsString = opponents.join(', ');
     const { state, dispatch } = useContext(SelectionContext);
+    let selectionActionType = SelectionActionType.DEFAULT;
+    let userAction = UserAction.DEFAULT;
     let substitionClass = '';
     if (state.selectoionSate.substitutedPlayer === player) {
         substitionClass = 'bg-primary';
     } else if (isAvailableForSubstitution(state.selectoionSate, player, isStarting)) {
         substitionClass = 'bg-warning';
+        selectionActionType = SelectionActionType.MAKE_SUBSTITUTION;
     }
-    let userAction = UserAction.DEFAULT;
     if (state.selectoionSate.userAction === UserAction.DEFAULT) {
+        selectionActionType = SelectionActionType.START_SUBSTITUTION;
         userAction = isStarting ? UserAction.SUBSTITUTING_STARTING_PLAYER : UserAction.SUBSTITUTING_BENCHED_PLAYER;
     }
 
@@ -35,7 +39,7 @@ function SelectedPlayer({ player, opponents, isStarting }: SelectedPlayerProps) 
 
         <div className={styles.PlayerWrapper}>
             <div className={`d-flex align-items-center flex-column ${styles.Player} ${substitionClass}`} onClick={() => {
-                dispatch!({ type: userAction, payload: player });
+                dispatch!({ type: selectionActionType, payload: {userAction, player} });
             }}>
                 <Shirt team={player.team} position={player.position} width={'70'} />
                 <div className={`${styles.PlayerName}`} >{player.name}</div>

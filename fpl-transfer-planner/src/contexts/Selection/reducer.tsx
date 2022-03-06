@@ -8,9 +8,15 @@ export type SelectionContextState = {
     selectoionSate: SelectionState
 }
 
+export enum SelectionActionType {
+    DEFAULT = "DEFAULT",
+    START_SUBSTITUTION = "START_SUBSTITUTION",
+    MAKE_SUBSTITUTION = "MAKE_SUBSTITUTION",
+}
+
 export type SelectionContextAction = {
-    type: UserAction,
-    payload: Player
+    type: SelectionActionType,
+    payload: { player: Player, userAction: UserAction }
 }
 
 export type SelectionContextType = {
@@ -19,23 +25,23 @@ export type SelectionContextType = {
 }
 
 export const selectionContextReducer = (state: SelectionContextState, action: SelectionContextAction) => {
-    const player = action.payload;
-    const userAction = action.type;
+    const { userAction, player } = action.payload;
+    const selectionActionType = action.type;
     let legalSubPositions;
-    switch (userAction) {
-        case UserAction.SUBSTITUTING_STARTING_PLAYER:
-            legalSubPositions = state.lineup.getLegalPositionsForSwitch(player.position, true);
-            break;
-        case UserAction.SUBSTITUTING_BENCHED_PLAYER:
-            legalSubPositions = state.lineup.getLegalPositionsForSwitch(player.position, false);
-            break;
-        case UserAction.DEFAULT:
+    switch (selectionActionType) {
+        case SelectionActionType.START_SUBSTITUTION:
+            const isStarting = userAction === UserAction.SUBSTITUTING_STARTING_PLAYER;
+            legalSubPositions = state.lineup.getLegalPositionsForSwitch(player.position, isStarting);
+            const newSelectionState: SelectionState = { userAction, legalSubPositions, substitutedPlayer: player };
+            const newState: SelectionContextState = { ...state, selectoionSate: newSelectionState }
+            return newState;
+        case SelectionActionType.MAKE_SUBSTITUTION:
+            state.lineup.makeSubstitution(state.selectoionSate.substitutedPlayer!, player);
+            return { ...state, selectoionSate: initialSelectionState };
+        case SelectionActionType.DEFAULT:
         default:
             return { ...state, selectoionSate: initialSelectionState };
     }
-    const newSelectionState: SelectionState = { userAction, legalSubPositions, substitutedPlayer: player };
-    const newState: SelectionContextState = { ...state, selectoionSate: newSelectionState }
-    return newState;
 }
 
 export const initialSelectionContext: SelectionContextState = {
