@@ -103,4 +103,14 @@ export class Lineup {
                 throw new Error("Impossible position");
         }
     }
+
+    copy() {
+        const copiedLineup = new Lineup();
+        copiedLineup.bench = new Set(this.bench);
+        copiedLineup.goalkeepers = new Set(this.goalkeepers);
+        copiedLineup.defenders  = new Set(this.defenders);
+        copiedLineup.midfielders = new Set(this.midfielders);
+        copiedLineup.forwards = new Set(this.forwards);
+        return copiedLineup;
+    }
 }

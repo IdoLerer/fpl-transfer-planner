@@ -28,19 +28,21 @@ export const selectionContextReducer = (state: SelectionContextState, action: Se
     const { userAction, player } = action.payload;
     const selectionActionType = action.type;
     let legalSubPositions;
+    // Making a deep copy of the lineup since a reducer must be a pure function
+    const newLineup = state.lineup.copy();
     switch (selectionActionType) {
         case SelectionActionType.START_SUBSTITUTION:
             const isStarting = userAction === UserAction.SUBSTITUTING_STARTING_PLAYER;
-            legalSubPositions = state.lineup.getLegalPositionsForSwitch(player.position, isStarting);
+            legalSubPositions = newLineup.getLegalPositionsForSwitch(player.position, isStarting);
             const newSelectionState: SelectionState = { userAction, legalSubPositions, substitutedPlayer: player };
-            const newState: SelectionContextState = { ...state, selectoionSate: newSelectionState }
+            const newState: SelectionContextState = {lineup: newLineup, selectoionSate: newSelectionState }
             return newState;
         case SelectionActionType.MAKE_SUBSTITUTION:
             state.lineup.makeSubstitution(state.selectoionSate.substitutedPlayer!, player);
-            return { ...state, selectoionSate: initialSelectionState };
+            return {lineup: newLineup, selectoionSate: initialSelectionState };
         case SelectionActionType.DEFAULT:
         default:
-            return { ...state, selectoionSate: initialSelectionState };
+            return {lineup: newLineup, selectoionSate: initialSelectionState };
     }
 }
 

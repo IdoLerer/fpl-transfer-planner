@@ -38,7 +38,7 @@ function SelectedPlayer({ player, opponents, isStarting }: SelectedPlayerProps) 
     return (
 
         <div className={styles.PlayerWrapper}>
-            <div className={`d-flex align-items-center flex-column ${styles.Player} ${substitionClass}`} onClick={() => {
+            <div className={`mx-auto d-flex align-items-center flex-column ${styles.Player} ${substitionClass}`} onClick={() => {
                 dispatch!({ type: selectionActionType, payload: {userAction, player} });
             }}>
                 <Shirt team={player.team} position={player.position} width={'70'} />
